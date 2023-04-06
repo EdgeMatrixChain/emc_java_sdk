@@ -30,6 +30,9 @@ import java.util.concurrent.ExecutionException;
 
 public class EdgeServiceTest {
 
+    /**
+     *  "http://3.145.214.36:40012/"  is one of testnet node's rpc url, may be unavailable
+     */
     private static EdgeWeb3j web3j = EdgeWeb3j.build(new HttpService("http://3.145.214.36:40012/"));
 
     @BeforeAll

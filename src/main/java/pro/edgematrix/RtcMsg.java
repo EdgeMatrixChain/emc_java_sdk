@@ -12,8 +12,9 @@
  */
 package pro.edgematrix;
 
-import pro.edgematrix.crypto.RawRtcMsg;
-
+/**
+ * rtc message
+ */
 public class RtcMsg {
     private String subject;
     private String application;
@@ -23,10 +24,10 @@ public class RtcMsg {
     public static RtcMsg createRtcMsg(
             String subject, String application, String content, String to) {
         RtcMsg rtcMsg = new RtcMsg();
-        rtcMsg.application=application;
-        rtcMsg.subject=subject;
-        rtcMsg.to=to;
-        rtcMsg.content=content;
+        rtcMsg.application = application;
+        rtcMsg.subject = subject;
+        rtcMsg.to = to;
+        rtcMsg.content = content;
         return rtcMsg;
     }
 

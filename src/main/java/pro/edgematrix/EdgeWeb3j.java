@@ -25,7 +25,7 @@ import pro.edgematrix.protocol.methods.response.EdgeSendRtcMsg;
 import pro.edgematrix.protocol.methods.response.EdgeSendTelegram;
 
 /**
- * JSON-RPC Request object building factory.
+ * egde-matrix JSON-RPC Request object building factory.
  */
 public interface EdgeWeb3j extends Ethereum, Web3jRx, Batcher {
 
@@ -39,17 +39,17 @@ public interface EdgeWeb3j extends Ethereum, Web3jRx, Batcher {
     Request<?, EdgeSendRtcMsg> edgeSendRawMsg(String var1);
 
     /**
-     * Construct a new Web3j instance.
+     * Construct a new EdgeWeb3j instance.
      *
      * @param web3jService web3j service instance - i.e. HTTP or IPC
-     * @return new Web3j instance
+     * @return new EdgeWeb3j instance
      */
     static EdgeWeb3j build(Web3jService web3jService) {
         return new JsonRpc2_0Web3j(web3jService);
     }
 
     /**
-     * Shutdowns a Web3j instance and closes opened resources.
+     * Shutdowns a EdgeWeb3j instance and closes opened resources.
      */
     void shutdown();
 }
