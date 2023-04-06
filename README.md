@@ -18,7 +18,6 @@ The simplest way to start your journey with emc_java_sdk is to create a project.
 Maven
 -----
 
-Java:
 
 #### Depoly jar to your local maven repository
 
@@ -62,8 +61,8 @@ public class YourEdgeCaller {
     private static EdgeWeb3j web3j = EdgeWeb3j.build(new HttpService("http://3.145.214.36:40012/"));
 
     public void sendRtcMessage() {
-        EdgeService edgeService=new EdgeService();
-        String s=edgeService.sendRtcMsg(
+        EdgeService edgeService = new EdgeService();
+        String s = edgeService.sendRtcMsg(
                 web3j,
                 ChainId.TEST_NET.getId(),
                 SampleKeys.CREDENTIALS,

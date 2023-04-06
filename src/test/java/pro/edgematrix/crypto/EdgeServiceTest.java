@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Web3 Labs Ltd.
+ * Copyright 2023 edgematrix Labs Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -31,13 +31,12 @@ import java.util.concurrent.ExecutionException;
 public class EdgeServiceTest {
 
     /**
-     *  "http://3.145.214.36:40012/"  is one of testnet node's rpc url, may be unavailable
+     * "http://3.145.214.36:40012/"  is one of testnet node's rpcUrl, may be unavailable sometimes
      */
-    private static EdgeWeb3j web3j = EdgeWeb3j.build(new HttpService("http://3.145.214.36:40012/"));
+    private final static EdgeWeb3j web3j = EdgeWeb3j.build(new HttpService("http://3.145.214.36:40012/"));
 
     @BeforeAll
     public static void prepare() {
-
     }
 
     @AfterAll
@@ -89,7 +88,7 @@ public class EdgeServiceTest {
         EdgeService edgeService = new EdgeService();
         BigInteger telegramCount = edgeService.getNextTelegramNonce(web3j, SampleKeys.ADDRESS);
         if (telegramCount != null) {
-            System.out.println(String.format("nextNonce: %s", telegramCount));
+            System.out.printf("nextNonce: %s%n", telegramCount);
         }
     }
 
@@ -98,7 +97,7 @@ public class EdgeServiceTest {
         EdgeService edgeService = new EdgeService();
         TransactionReceipt receipt = edgeService.getTelegramReceipt(web3j, "0x6b7c880d58fef940e7b7932b9239d2737b4a71583c4640757e234de94bb98c0b");
         if (receipt != null && receipt.getBlockHash() != null && receipt.getStatus() != null && receipt.getTo() != null) {
-            System.out.println(String.format("blockHash: %s, status: %s, to: %s", receipt.getBlockHash(), receipt.getStatus(), receipt.getTo()));
+            System.out.printf("blockHash: %s, status: %s, to: %s%n", receipt.getBlockHash(), receipt.getStatus(), receipt.getTo());
         }
     }
 

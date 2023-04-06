@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Web3 Labs Ltd.
+ * Copyright 2023 edgematrix Labs Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -113,7 +113,7 @@ public class EdgeService {
      * @param chainId     EMC chain id, 1 is main net
      * @param credentials caller's credential
      * @param rtcMsg      RtcMsg instance to be sent
-     * @return
+     * @return deserialized JSON-RPC responses
      */
     public String sendRtcMsg(EdgeWeb3j web3j, long chainId, Credentials credentials, RtcMsg rtcMsg) {
         if (web3j == null) return null;
@@ -144,8 +144,8 @@ public class EdgeService {
      * @param web3j   EdgeWeb3j instance
      * @param address caller's address - e.g. "0x0aF137aa3EcC7d10d926013ee34049AfA77382e6"
      * @return number of nonce, will be used for sendTelegram
-     * @throws ExecutionException
-     * @throws InterruptedException
+     * @throws ExecutionException ExecutionException
+     * @throws InterruptedException InterruptedException
      */
     public BigInteger getNextTelegramNonce(EdgeWeb3j web3j, String address) throws ExecutionException, InterruptedException {
         if (web3j == null) return null;
@@ -163,8 +163,8 @@ public class EdgeService {
      *
      * @param web3j        EdgeWeb3j instance
      * @param telegramHash hashString returned by a sendTelegram call,  - e.g. "0x6b7c880d58fef940e7b7932b9239d2737b4a71583c4640757e234de94bb98c0b"
-     * @return
-     * @throws IOException
+     * @return EthGetTransactionReceipt
+     * @throws IOException IOException
      */
     public TransactionReceipt getTelegramReceipt(EdgeWeb3j web3j, String telegramHash) throws IOException {
         EthGetTransactionReceipt transactionReceipt = web3j.edgeGetTelegramReceipt(telegramHash).send();

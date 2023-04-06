@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Web3 Labs Ltd.
+ * Copyright 2023 edgematrix Labs Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -23,11 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TelegramEncoderTest {
 
-    // Example from https://eips.ethereum.org/EIPS/eip-155
-    private final String SIGN_RESULT_ETH_EXAMPLE =
-            "0xf85d038080940000000000000000000000000000000000003101808028a0bec9c466527c5d86bba8f9df2c4db78fa19948ed9ff05de532b7607cff939474a0495b85bc7cc2bc8b69860f3033523afa3ef4f839cfc2687c0f4bbe60b718df5d";
-
-
     @Test
     public void testSignMessageAfterEip155() {
         byte[] signedMessage =
@@ -37,6 +32,7 @@ public class TelegramEncoderTest {
                         SampleKeys.CREDENTIALS);
 
         String hexMessage = Numeric.toHexString(signedMessage);
+        String SIGN_RESULT_ETH_EXAMPLE = "0xf85d038080940000000000000000000000000000000000003101808028a0bec9c466527c5d86bba8f9df2c4db78fa19948ed9ff05de532b7607cff939474a0495b85bc7cc2bc8b69860f3033523afa3ef4f839cfc2687c0f4bbe60b718df5d";
         assertEquals(SIGN_RESULT_ETH_EXAMPLE, hexMessage);
     }
 
