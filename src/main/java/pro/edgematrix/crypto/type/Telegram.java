@@ -27,8 +27,8 @@ import java.util.List;
 import static org.web3j.crypto.transaction.type.TransactionType.LEGACY;
 
 /**
- * Transaction class used for signing transactions locally.<br>
- * For the specification, refer to p4 of the <a href="http://gavwood.com/paper.pdf">yellow
+ * Telegram class used for signing Telegram locally.<br>
+ * For the specification, refer to <a href="http://www.edgematrix.pro/api/paper.pdf">yellow
  * paper</a>.
  */
 public class Telegram implements ITelegram {
