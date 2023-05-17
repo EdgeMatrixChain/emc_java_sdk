@@ -14,6 +14,7 @@ package pro.edgematrix;
 
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.core.DefaultBlockParameterName;
+import org.web3j.protocol.core.Request;
 import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
 import org.web3j.protocol.core.methods.response.EthGetTransactionReceipt;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
@@ -38,7 +39,7 @@ public class EdgeService {
      * send a telegram to edge-matrix node
      *
      * @param web3j           EdgeWeb3j instance
-     * @param chainId         EMC chain id, 1 is main net
+     * @param chainId         EMC chain id, 2 is testnet  chain id
      * @param nonce           nonce for caller
      * @param contractAddress address to
      * @param credentials     caller's credential
@@ -75,7 +76,7 @@ public class EdgeService {
      * create a rtc subject on edge-matrix net
      *
      * @param web3j       EdgeWeb3j instance
-     * @param chainId     EMC chain id, 1 is main net
+     * @param chainId     EMC chain id, 2 is testnet chain id
      * @param nonce       nonce for caller
      * @param credentials caller's credential
      * @return deserialized JSON-RPC responses
@@ -106,11 +107,39 @@ public class EdgeService {
         return null;
     }
 
+    public String callEdgeApi(EdgeWeb3j web3j, long chainId, BigInteger nonce, Credentials credentials, String peerId, String apiHttpMethod, String apiPath, String apiData) {
+        if (web3j == null) return null;
+
+        BigInteger gasPrice = BigInteger.valueOf(0);
+        BigInteger gasLimit = BigInteger.valueOf(0);
+        BigInteger value = BigInteger.valueOf(0);
+        String data = String.format("{\"peerId\":\"%s\",\"endpoint\":\"/api\",\"Input\":{\"method\": \"%s\",\"headers\":[],\"path\":\"%s\",\"body\":%s}}",peerId,apiHttpMethod,apiPath,apiData);
+        RawTelegram rawTransaction = RawTelegram.createTransaction(nonce, gasPrice, gasLimit, PrecompileAddress.EDGE_CALL.getAddress(), value, data);
+
+        byte[] signMessage = TelegramEncoder.signMessage(rawTransaction, chainId, credentials);
+        String signData = Numeric.toHexString(signMessage);
+
+        if (!"".equals(signData)) {
+            try {
+                Request<?, EdgeSendTelegram> edgeSendTelegramRequest = web3j.edgeSendRawTelegram(signData);
+                EdgeSendTelegram send = edgeSendTelegramRequest.send();
+                if (send.hasError()) {
+                    throw new RuntimeException(send.getError().getMessage());
+                } else {
+                    return send.getResult();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException("send telegram exception");
+            }
+        }
+        return null;
+    }
+
     /**
      * send a message to rtc subject
      *
      * @param web3j       EdgeWeb3j instance
-     * @param chainId     EMC chain id, 1 is main net
+     * @param chainId     EMC chain id, 2 is testnet chain id
      * @param credentials caller's credential
      * @param rtcMsg      RtcMsg instance to be sent
      * @return deserialized JSON-RPC responses

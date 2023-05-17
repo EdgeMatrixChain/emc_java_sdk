@@ -16,9 +16,18 @@ package pro.edgematrix;
  * rtc message
  */
 public class RtcMsg {
+
+    // RTC channel hash.
     private String subject;
+
+    // application name the rtc channel belongs to
     private String application;
+
+    // rtc text content.
     private String content;
+
+    // address of rtc message to.
+    // 0x0 is broadcast address
     private String to;
 
     public static RtcMsg createRtcMsg(

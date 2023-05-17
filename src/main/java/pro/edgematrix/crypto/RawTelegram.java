@@ -15,8 +15,10 @@ package pro.edgematrix.crypto;
 import org.web3j.crypto.transaction.type.ITransaction;
 import org.web3j.crypto.transaction.type.LegacyTransaction;
 import org.web3j.crypto.transaction.type.TransactionType;
+import org.web3j.utils.Numeric;
 
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Transaction class used for signing transactions locally.<br>
@@ -38,7 +40,7 @@ public class RawTelegram {
             String to,
             BigInteger value,
             String data) {
-        this(new LegacyTransaction(nonce, gasPrice, gasLimit, to, value, data));
+        this(new LegacyTransaction(nonce, gasPrice, gasLimit, to, value, Numeric.toHexString(data.getBytes(StandardCharsets.UTF_8))));
     }
 
     public static RawTelegram createContractTransaction(
@@ -72,7 +74,7 @@ public class RawTelegram {
             String data) {
 
         return new RawTelegram(
-                LegacyTransaction.createTransaction(nonce, gasPrice, gasLimit, to, value, data));
+                LegacyTransaction.createTransaction(nonce, gasPrice, gasLimit, to, value, Numeric.toHexString(data.getBytes(StandardCharsets.UTF_8))));
     }
 
 
