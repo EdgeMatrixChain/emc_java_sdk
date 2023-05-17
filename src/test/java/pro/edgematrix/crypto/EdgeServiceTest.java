@@ -41,7 +41,7 @@ public class EdgeServiceTest {
      */
     private final static EdgeWeb3j web3j = EdgeWeb3j.build(new HttpService("https://oregon.edgematrix.xyz"));
 
-    // A edge-matrix node that is running a Stable Diffusion service for testing purpose.
+    // A edge-matrix node that is running Stable Diffusion service for testing purpose.
     private final static String TEST_PEERID = "16Uiu2HAm14xAsnJHDqnQNQ2Qqo1SapdRk9j8mBKY6mghVDP9B9u5";
 
 
