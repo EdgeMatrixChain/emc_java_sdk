@@ -16,6 +16,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import okhttp3.OkHttpClient;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -33,16 +34,26 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Base64;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 public class EdgeServiceTest {
 
     /**
      * "oregon.edgematrix.xyz"  is one of testnet node's rpcUrl
      */
-    private final static EdgeWeb3j web3j = EdgeWeb3j.build(new HttpService("https://oregon.edgematrix.xyz"));
+    private static EdgeWeb3j web3j = null;
+    static {
+        OkHttpClient httpClient = new OkHttpClient.Builder()
+                .retryOnConnectionFailure(true)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .build();
+         web3j = EdgeWeb3j.build(new HttpService("https://oregon.edgematrix.xyz",httpClient));
+    }
 
     // A edge-matrix node that is running Stable Diffusion service for testing purpose.
-    private final static String TEST_PEERID = "16Uiu2HAm14xAsnJHDqnQNQ2Qqo1SapdRk9j8mBKY6mghVDP9B9u5";
+    private final static String TEST_PEERID = "16Uiu2HAmHsjCvAAVmWUUKt6WA85gHUEnepa6xzNqvAeC8gA4AWUC";
 
 
     @BeforeAll
@@ -156,7 +167,7 @@ public class EdgeServiceTest {
                 peerId,
                 apiHttpMethod,
                 apiPath,
-                apiData);
+                "{\"prompt\":\"(Raw photo,realistic,photorealistic),dynamic angle,gorgeous,amazing,epic,ultra-detailed,1girl\\\\(mecha\\\\),(techpunkmask:1.2),slim body,kong-fu,black hair,black eyes,Chinese hairstyle,see-through,glowing body,cyberpunk,cyborg ninja,cinematic Lighting,Accent Lighting,dramatic_shadow,ray_tracing,complex clothes and patterns, fighting,(holding laser-katana:1.3),hair-bangs,red long scarf,highly real skin,outdoors, strong dynamic pose, neon lights, beautiful glowing,\",\"negative_prompt\":\"(nsfw,nude,loli,children,childish,child, EasyNegative)\",\"sampler\":\"Euler a\",\"steps\":40,\"width\":256,\"height\":256,\"cfg_scale\":7,\"seed\":1405709391,\"clip_skip\":2}");
         if (isValidJSON(s)) {
             ObjectMapper objectMapper = new ObjectMapper();
             EdgeCallResult edgeCallResult = objectMapper.readValue(s, EdgeCallResult.class);
